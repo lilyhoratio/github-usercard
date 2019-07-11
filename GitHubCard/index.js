@@ -1,44 +1,38 @@
 /* Step 1: using axios, send a GET request to the following URL 
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
-*/
 
-/* Step 2: Inspect and study the data coming back, this is YOUR 
+   Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
 
    Skip to Step 3.
+
+   Step 4: Pass the data received from Github into your function, 
+           create a new component and add it to the DOM as a child of .cards
 */
 
 const githubHandle = "lilyhoratio";
-
+const cards = document.querySelector(".cards");
 // const promise = axios
 //   .get(`https://api.github.com/users/${githubHandle}`)
 //   .then(data => {
 //     data.data;
 //   });
-
 // console.log("response", githubDataObj) // response > Promise {<pending>}
 
 axios
   .get(`https://api.github.com/users/${githubHandle}`)
   // Handles Success: here's where we get the results from server
-  .then(data => {
-    console.log("response", data)
+  .then(res => {
+    console.log("response", res.data)
+    const githubUser = createCard(res.data)
+    cards.appendChild(githubUser)
   })
   // Handles Failure
   .catch(error => {
-    console.log("error", error);
+    console.log("API error", error);
   })
-  
-
-/* Step 4: Pass the data received from Github into your function, 
-           create a new component and add it to the DOM as a child of .cards
-*/
-
-const cards = document.querySelector(".cards");
-
-// function cardComponent()
 
 /* Step 5: Now that you have your own card getting added to the DOM, either 
           follow this link in your browser https://api.github.com/users/<Your github name>/followers 
@@ -72,10 +66,11 @@ const followersArray = [];
 
 */
 
-function cardComponent(githubProfile) {
+function createCard(githubProfile) {
   // create elements
   const card = document.createElement("div")
   const img = document.createElement("img")
+  const cardInfo = document.createElement("div")
   const name = document.createElement("h3")
   const username = document.createElement("p")
   const location = document.createElement("p")
@@ -85,7 +80,39 @@ function cardComponent(githubProfile) {
   const following = document.createElement("p")
   const bio = document.createElement("p")
 
+  // html structure
+  card.appendChild(img)
+  card.appendChild(cardInfo)
+  cardInfo.appendChild(name)
+  cardInfo.appendChild(username)
+  cardInfo.appendChild(location)
+  cardInfo.appendChild(profile)
+  profile.appendChild(githubUrl)
+  cardInfo.appendChild(followers)
+  cardInfo.appendChild(following)
+  cardInfo.appendChild(bio)
 
+  // apply classes and tags
+  card.classList.add("card")
+  cardInfo.classList.add("card-info")
+  name.classList.add("name")
+  username.classList.add("username")
+
+  // apply tags
+  img.src = githubProfile.avatar_url;
+  githubUrl.href = githubProfile.html_url
+  
+  // apply text content
+  name.textContent = githubProfile.name;
+  username.textContent = githubProfile.login;
+  location.textContent = `Location: ${githubProfile.location}`
+  profile.innerHTML = "Profile: <br>"
+  githubUrl.textContent = githubProfile.html_url
+  followers.textContent = `Followers: ${githubProfile.followers}`
+  following.textContent = `Following: ${githubProfile.following}`
+  bio.textContent = `Bio: ${githubProfile.bio}`
+
+  return card
 }
 
 
