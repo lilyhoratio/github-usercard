@@ -10,6 +10,11 @@
    Skip to Step 3.
 */
 
+const githubHandle = "lilyhoratio";
+axios
+  .get(`https://api.github.com/users/${githubHandle}`)
+  .then(object => console.log(object.data));
+
 /* Step 4: Pass the data received from Github into your function, 
            create a new component and add it to the DOM as a child of .cards
 */
