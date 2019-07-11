@@ -87,7 +87,7 @@ function createCard(githubProfile) {
   cardInfo.appendChild(username)
   cardInfo.appendChild(location)
   cardInfo.appendChild(profile)
-  profile.appendChild(githubUrl)
+  // profile.appendChild(githubUrl)
   cardInfo.appendChild(followers)
   cardInfo.appendChild(following)
   cardInfo.appendChild(bio)
@@ -106,8 +106,9 @@ function createCard(githubProfile) {
   name.textContent = githubProfile.name;
   username.textContent = githubProfile.login;
   location.textContent = `Location: ${githubProfile.location}`
-  // profile.textContent = "Profile: "
-  profile.innerHTML = `Profile: <a href=${githubProfile.html_url}> ${githubProfile.html_url} </a>`
+  profile.textContent = "Profile: " //Overrides anchor tag children with text. From MDN - Setting textContent on a node removes all of the node's children and replaces them with a single text node with the given string value.
+  profile.appendChild(githubUrl)
+  // profile.innerHTML = `Profile: <a href=${githubProfile.html_url}> ${githubProfile.html_url} </a>`
   githubUrl.textContent = `${githubProfile.html_url}`
   followers.textContent = `Followers: ${githubProfile.followers}`
   following.textContent = `Following: ${githubProfile.following}`
@@ -116,10 +117,11 @@ function createCard(githubProfile) {
   return card
 }
 
-/* List of LS Instructors Github username's: 
-  tetondan
-  dustinmyers
-  justsml
-  luishrd
-  bigknell
-*/
+const followersArr = [
+  "tetondan",
+  "dustinmyers",
+  "justsml",
+  "luishrd",
+  "bigknell"
+]
+
