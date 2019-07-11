@@ -11,13 +11,34 @@
 */
 
 const githubHandle = "lilyhoratio";
+
+// const promise = axios
+//   .get(`https://api.github.com/users/${githubHandle}`)
+//   .then(data => {
+//     data.data;
+//   });
+
+// console.log("response", githubDataObj) // response > Promise {<pending>}
+
 axios
   .get(`https://api.github.com/users/${githubHandle}`)
-  .then(object => console.log(object.data));
+  // Handles Success: here's where we get the results from server
+  .then(data => {
+    console.log("response", data)
+  })
+  // Handles Failure
+  .catch(error => {
+    console.log("error", error);
+  })
+  
 
 /* Step 4: Pass the data received from Github into your function, 
            create a new component and add it to the DOM as a child of .cards
 */
+
+const cards = document.querySelector(".cards");
+
+// function cardComponent()
 
 /* Step 5: Now that you have your own card getting added to the DOM, either 
           follow this link in your browser https://api.github.com/users/<Your github name>/followers 
@@ -50,6 +71,23 @@ const followersArray = [];
 </div>
 
 */
+
+function cardComponent(githubProfile) {
+  // create elements
+  const card = document.createElement("div")
+  const img = document.createElement("img")
+  const name = document.createElement("h3")
+  const username = document.createElement("p")
+  const location = document.createElement("p")
+  const profile = document.createElement("p")
+  const githubUrl = document.createElement("a")
+  const followers = document.createElement("p")
+  const following = document.createElement("p")
+  const bio = document.createElement("p")
+
+
+}
+
 
 /* List of LS Instructors Github username's: 
   tetondan
