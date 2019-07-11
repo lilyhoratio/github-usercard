@@ -100,21 +100,21 @@ function createCard(githubProfile) {
 
   // apply tags
   img.src = githubProfile.avatar_url;
-  githubUrl.href = githubProfile.html_url
+  githubUrl.href = `${githubProfile.html_url}`
   
   // apply text content
   name.textContent = githubProfile.name;
   username.textContent = githubProfile.login;
   location.textContent = `Location: ${githubProfile.location}`
-  profile.innerHTML = "Profile: <br>"
-  githubUrl.textContent = githubProfile.html_url
+  // profile.textContent = "Profile: "
+  profile.innerHTML = `Profile: <a href=${githubProfile.html_url}> ${githubProfile.html_url} </a>`
+  githubUrl.textContent = `${githubProfile.html_url}`
   followers.textContent = `Followers: ${githubProfile.followers}`
   following.textContent = `Following: ${githubProfile.following}`
-  bio.textContent = `Bio: ${githubProfile.bio}`
+  bio.textContent = `Bio: ${githubProfile.bio || 'N/A'}`
 
   return card
 }
-
 
 /* List of LS Instructors Github username's: 
   tetondan
