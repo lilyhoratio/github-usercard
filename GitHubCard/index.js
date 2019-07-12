@@ -166,6 +166,9 @@ function createCard(githubProfile) {
   company.textContent = `Company: ${githubProfile.company || "N/A"}`
   publicRepos.textContent = `Public Repos: ${githubProfile.public_repos}`
 
+  // style so things aren't badly shifted by the button
+  cardInfo.style.marginBottom = "20px" //how to do this dynamically?
+
   //eventListener
   expandButton.addEventListener("click", () => {
     cardInfo.classList.toggle("card-open")
@@ -173,9 +176,12 @@ function createCard(githubProfile) {
     if (cardInfo.classList.contains("card-open")) {
       cardInfoMore.style.display = "block"
       expandButton.textContent = "Read Less"
+      cardInfo.style.marginBottom = "0px"
+      cardInfoMore.style.marginBottom = "20px"
     } else {
       cardInfoMore.style.display = "none"
       expandButton.textContent = "Read More"
+      cardInfo.style.marginBottom = "20px"
     }
   })
 
