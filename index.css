@@ -93,6 +93,7 @@ body {
 
 .card {
   width: 100%;
+  position: relative;
   padding: 20px;
   display: flex;
   border-radius: 5px;
@@ -123,5 +124,25 @@ body {
   margin: 3px 0 10px;
 }
 
+.card .expand-button {
+  cursor: pointer;
+  padding: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  position: absolute;
+  bottom: 0;
+  color: white;
+  background-color: #5AC2C8;
+  border-radius: 20px;
+  border: 1px solid #5AC2C8;
+}
 
+.card-open {
+  height: auto;
+  display: block;
+}
+
+.card-info-more {
+  display: none;
+}
 
