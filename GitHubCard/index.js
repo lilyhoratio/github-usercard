@@ -172,8 +172,10 @@ function createCard(githubProfile) {
 
     if (cardInfo.classList.contains("card-open")) {
       cardInfoMore.style.display = "block"
+      expandButton.textContent = "Read Less"
     } else {
       cardInfoMore.style.display = "none"
+      expandButton.textContent = "Read More"
     }
   })
 
