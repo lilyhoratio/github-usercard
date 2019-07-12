@@ -23,7 +23,7 @@
         <p>Following: {users following count}</p>
         <p>Bio: {users bio}</p>
       </div>
-      <button></button>
+      <button class = "expand-button"> Expand </button>
       <div class="card-info-more">
         <p>Company: {users company}</p>
         <p>Public Repos: {users public repos count}</p>
@@ -126,18 +126,21 @@ function createCard(githubProfile) {
   const bio = document.createElement("p");
   const expandButton = document.createElement("button");
   const company = document.createElement("p")
+  const publicRepos = document.createElement("p")
+  const cardInfoMore = document.createElement("div") 
 
   // html structure
-  card.append(img, cardInfo);
-  cardInfo.append(name, username, location, profile, followers, following, bio, expandButton, company);
+  card.append(img, cardInfo, expandButton, cardInfoMore);
+  cardInfo.append(name, username, location, profile, followers, following, bio);
   // profile.append(githubUrl) //move to after setting profile.textContent so that githubUrl isn't overridden
+  cardInfoMore.append(company, publicRepos)
 
   // apply classes
   card.classList.add("card");
   cardInfo.classList.add("card-info");
   name.classList.add("name");
   username.classList.add("username");
-  expandButton.classList.add("expandButton")
+  expandButton.classList.add("expand-button")
 
   // apply tags
   img.src = githubProfile.avatar_url;
@@ -156,6 +159,7 @@ function createCard(githubProfile) {
   bio.textContent = `Bio: ${githubProfile.bio || "N/A"}`;
   expandButton.textContent = "Expand"
   company.textContent = `Company: ${githubProfile.company || "N/A"}`
+  publicRepos.textContent = `Public Repos: ${githubProfile.public_repos}`
 
   //eventListener
   expandButton.addEventListener("click", () => {
