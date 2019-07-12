@@ -46,7 +46,7 @@ In this project we are going to be accessing the GitHub API and building a socia
 
 ### Part 3: Your Friends
 
-* After you have successfully added your own card to the DOM, we will get a list of your followers and programmatically add cards for them as well. Follow the instructions in GitHubCard/index.js. 
+[x] After you have successfully added your own card to the DOM, we will get a list of your followers and programmatically add cards for them as well. Follow the instructions in GitHubCard/index.js. 
 
 ### Stretch Goals:
 

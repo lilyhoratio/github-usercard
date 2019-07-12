@@ -25,14 +25,14 @@ axios
   .get(`https://api.github.com/users/${githubHandle}`)
   // Handles Success: here's where we get the results from server
   .then(res => {
-    console.log("response", res.data)
-    const githubUser = createCard(res.data)
-    cards.appendChild(githubUser)
+    console.log("response", res.data);
+    const githubUser = createCard(res.data);
+    cards.appendChild(githubUser);
   })
   // Handles Failure
   .catch(error => {
     console.log("API error", error);
-  })
+  });
 
 /* Step 5: Now that you have your own card getting added to the DOM, either 
           follow this link in your browser https://api.github.com/users/<Your github name>/followers 
@@ -44,7 +44,7 @@ axios
           user, and adding that card to the DOM.
 */
 
-const followersArray = [  
+const followersArray = [
   "tetondan",
   "dustinmyers",
   "justsml",
@@ -53,13 +53,42 @@ const followersArray = [
 ];
 
 followersArray.forEach(follower => {
-  axios
-    .get(`https://api.github.com/users/${follower}`)
-    .then(res => {
-      const githubFollower = createCard(res.data)
-      cards.appendChild(githubFollower)
+  axios.get(`https://api.github.com/users/${follower}`).then(res => {
+    const githubFollower = createCard(res.data);
+    cards.appendChild(githubFollower);
+  });
+});
+
+//stretch 
+// v1 - from walkthrough
+// axios
+//   .get(`https://api.github.com/users/${githubHandle}/followers`)
+//   .then(res => {
+//     res.data
+//       .slice(0, 3) // limit to first 3 followers
+//       .forEach(follower => {
+//         axios
+//           .get(`https://api.github.com/users/${follower.login}`)
+//           .then(res => {
+//             const card = createCard(res.data);
+//             cards.append(card);
+//           });
+//       });
+//   });
+
+// v2 - from walkthrough
+
+axios.get(`https://api.github.com/users/${githubHandle}/followers`)
+  .then(res => res.data.slice(0, 3)) // limit to first 3 followers
+  .then(followers => {
+    followers.forEach( follower => {
+      axios.get(`https://api.github.com/users/${follower.login}`)
+        .then(res => {
+          const card = createCard(res.data);
+          cards.append(card);
+        })
     })
-})
+  })
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -83,53 +112,51 @@ followersArray.forEach(follower => {
 
 function createCard(githubProfile) {
   // create elements
-  const card = document.createElement("div")
-  const img = document.createElement("img")
-  const cardInfo = document.createElement("div")
-  const name = document.createElement("h3")
-  const username = document.createElement("p")
-  const location = document.createElement("p")
-  const profile = document.createElement("p")
-  const githubUrl = document.createElement("a")
-  const followers = document.createElement("p")
-  const following = document.createElement("p")
-  const bio = document.createElement("p")
+  const card = document.createElement("div");
+  const img = document.createElement("img");
+  const cardInfo = document.createElement("div");
+  const name = document.createElement("h3");
+  const username = document.createElement("p");
+  const location = document.createElement("p");
+  const profile = document.createElement("p");
+  const githubUrl = document.createElement("a");
+  const followers = document.createElement("p");
+  const following = document.createElement("p");
+  const bio = document.createElement("p");
 
   // html structure
-  card.appendChild(img)
-  card.appendChild(cardInfo)
-  cardInfo.appendChild(name)
-  cardInfo.appendChild(username)
-  cardInfo.appendChild(location)
-  cardInfo.appendChild(profile)
+  card.appendChild(img);
+  card.appendChild(cardInfo);
+  cardInfo.appendChild(name);
+  cardInfo.appendChild(username);
+  cardInfo.appendChild(location);
+  cardInfo.appendChild(profile);
   // profile.appendChild(githubUrl)
-  cardInfo.appendChild(followers)
-  cardInfo.appendChild(following)
-  cardInfo.appendChild(bio)
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(bio);
 
   // apply classes and tags
-  card.classList.add("card")
-  cardInfo.classList.add("card-info")
-  name.classList.add("name")
-  username.classList.add("username")
+  card.classList.add("card");
+  cardInfo.classList.add("card-info");
+  name.classList.add("name");
+  username.classList.add("username");
 
   // apply tags
   img.src = githubProfile.avatar_url;
-  githubUrl.href = `${githubProfile.html_url}`
-  
+  githubUrl.href = `${githubProfile.html_url}`;
+
   // apply text content
   name.textContent = githubProfile.name;
   username.textContent = githubProfile.login;
-  location.textContent = `Location: ${githubProfile.location}`
-  profile.textContent = "Profile: " //Overrides anchor tag children with text. From MDN - Setting textContent on a node removes all of the node's children and replaces them with a single text node with the given string value.
-  profile.appendChild(githubUrl)
+  location.textContent = `Location: ${githubProfile.location}`;
+  profile.textContent = "Profile: "; //Overrides anchor tag children with text. From MDN - Setting textContent on a node removes all of the node's children and replaces them with a single text node with the given string value.
+  profile.appendChild(githubUrl);
   // profile.innerHTML = `Profile: <a href=${githubProfile.html_url}> ${githubProfile.html_url} </a>`
-  githubUrl.textContent = `${githubProfile.html_url}`
-  followers.textContent = `Followers: ${githubProfile.followers}`
-  following.textContent = `Following: ${githubProfile.following}`
-  bio.textContent = `Bio: ${githubProfile.bio || 'N/A'}`
+  githubUrl.textContent = `${githubProfile.html_url}`;
+  followers.textContent = `Followers: ${githubProfile.followers}`;
+  following.textContent = `Following: ${githubProfile.following}`;
+  bio.textContent = `Bio: ${githubProfile.bio || "N/A"}`;
 
-  return card
+  return card;
 }
-
-
