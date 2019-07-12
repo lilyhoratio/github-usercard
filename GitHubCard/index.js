@@ -23,6 +23,11 @@
         <p>Following: {users following count}</p>
         <p>Bio: {users bio}</p>
       </div>
+      <button></button>
+      <div class="card-info-more">
+        <p>Company: {users company}</p>
+        <p>Public Repos: {users public repos count}</p>
+      </div>
     </div>
 
    Step 4: Pass the data received from Github into your function, 
@@ -96,7 +101,7 @@ followersArray.forEach(follower => {
 
 axios
   .get(`https://api.github.com/users/${githubHandle}/followers`)
-  .then(res => res.data.slice(0, 3))
+  .then(res => res.data.slice(0, 5))
   .then(followers => {
     followers.forEach(follower => {
       axios.get(`https://api.github.com/users/${follower.login}`).then(res => {
@@ -119,18 +124,20 @@ function createCard(githubProfile) {
   const followers = document.createElement("p");
   const following = document.createElement("p");
   const bio = document.createElement("p");
+  const expandButton = document.createElement("button");
+  const company = document.createElement("p")
 
   // html structure
   card.append(img, cardInfo);
-  cardInfo.append(name, username, location, profile);
+  cardInfo.append(name, username, location, profile, followers, following, bio, expandButton, company);
   // profile.append(githubUrl) //move to after setting profile.textContent so that githubUrl isn't overridden
-  cardInfo.append(followers, following, bio);
 
   // apply classes
   card.classList.add("card");
   cardInfo.classList.add("card-info");
   name.classList.add("name");
   username.classList.add("username");
+  expandButton.classList.add("expandButton")
 
   // apply tags
   img.src = githubProfile.avatar_url;
@@ -147,6 +154,13 @@ function createCard(githubProfile) {
   followers.textContent = `Followers: ${githubProfile.followers}`;
   following.textContent = `Following: ${githubProfile.following}`;
   bio.textContent = `Bio: ${githubProfile.bio || "N/A"}`;
+  expandButton.textContent = "Expand"
+  company.textContent = `Company: ${githubProfile.company || "N/A"}`
+
+  //eventListener
+  expandButton.addEventListener("click", () => {
+    card.classList.toggle("card-open")
+  })
 
   return card;
 }
