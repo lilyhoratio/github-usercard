@@ -94,9 +94,9 @@ body {
 .card {
   width: 100%;
 
-  height: 200px;
+  /* height: 200px;
   overflow: hidden;
-  position: relative;
+  position: relative; */
 
   padding: 20px;
   display: flex;
@@ -134,5 +134,10 @@ body {
 
 .card-open {
   height: auto;
+  display: block;
+}
+
+.card-info-more {
+  display: none;
 }
 

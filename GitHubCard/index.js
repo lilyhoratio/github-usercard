@@ -10,25 +10,27 @@
    Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
 
-    <div class="card">
-      <img src={image url of user} />
-      <div class="card-info">
-        <h3 class="name">{users name}</h3>
-        <p class="username">{users user name}</p>
-        <p>Location: {users location}</p>
-        <p>Profile:  
-          <a href={address to users github page}>{address to users github page}</a>
-        </p>
-        <p>Followers: {users followers count}</p>
-        <p>Following: {users following count}</p>
-        <p>Bio: {users bio}</p>
-      </div>
-      <button class = "expand-button"> Expand </button>
-      <div class="card-info-more">
-        <p>Company: {users company}</p>
-        <p>Public Repos: {users public repos count}</p>
-      </div>
-    </div>
+      <div class="card">
+        <img src={image url of user} />
+        <div class="card-info-container">
+          <div class="card-info"
+            <h3 class="name">{users name}</h3>
+            <p class="username">{users user name}</p>
+            <p>Location: {users location}</p>
+            <p>Profile:  
+              <a href={address to users github page}>{address to users github page}</a>
+            </p>
+            <p>Followers: {users followers count}</p>
+            <p>Following: {users following count}</p>
+            <p>Bio: {users bio}</p>
+          </div>
+          <button class = "expand-button"> Expand </button>
+          <div class="card-info-more">
+            <p>Company: {users company}</p>
+            <p>Public Repos: {users public repos count}</p>
+          </div>
+        </div>
+      </div
 
    Step 4: Pass the data received from Github into your function, 
            create a new component and add it to the DOM as a child of .cards
@@ -115,6 +117,7 @@ function createCard(githubProfile) {
   // create elements
   const card = document.createElement("div");
   const img = document.createElement("img");
+  const cardInfoContainer = document.createElement("div");
   const cardInfo = document.createElement("div");
   const name = document.createElement("h3");
   const username = document.createElement("p");
@@ -130,7 +133,8 @@ function createCard(githubProfile) {
   const cardInfoMore = document.createElement("div") 
 
   // html structure
-  card.append(img, cardInfo, expandButton, cardInfoMore);
+  card.append(img, cardInfoContainer);
+  cardInfoContainer.append(cardInfo, expandButton, cardInfoMore)
   cardInfo.append(name, username, location, profile, followers, following, bio);
   // profile.append(githubUrl) //move to after setting profile.textContent so that githubUrl isn't overridden
   cardInfoMore.append(company, publicRepos)
@@ -141,6 +145,7 @@ function createCard(githubProfile) {
   name.classList.add("name");
   username.classList.add("username");
   expandButton.classList.add("expand-button")
+  cardInfoMore.classList.add("card-info-more")
 
   // apply tags
   img.src = githubProfile.avatar_url;
@@ -157,13 +162,19 @@ function createCard(githubProfile) {
   followers.textContent = `Followers: ${githubProfile.followers}`;
   following.textContent = `Following: ${githubProfile.following}`;
   bio.textContent = `Bio: ${githubProfile.bio || "N/A"}`;
-  expandButton.textContent = "Expand"
+  expandButton.textContent = "Read More"
   company.textContent = `Company: ${githubProfile.company || "N/A"}`
   publicRepos.textContent = `Public Repos: ${githubProfile.public_repos}`
 
   //eventListener
   expandButton.addEventListener("click", () => {
-    card.classList.toggle("card-open")
+    cardInfo.classList.toggle("card-open")
+
+    if (cardInfo.classList.contains("card-open")) {
+      cardInfoMore.style.display = "block"
+    } else {
+      cardInfoMore.style.display = "none"
+    }
   })
 
   return card;
